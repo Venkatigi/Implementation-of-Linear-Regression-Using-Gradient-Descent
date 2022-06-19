@@ -17,45 +17,48 @@ To write a program to implement the linear regression using gradient descent.
 
 ## Program:
 ```
-/*
 Program to implement the linear regression using gradient descent.
 Developed by   : Venkatesh E
-RegisterNumber : 212221230119 
-*/
-```
+RegisterNumber : 212221230119
 
-````python
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
-dataset = pd.read_csv('/content/student_scores - student_scores.csv')
-dataset.head()
-dataset.tail()
-x  = dataset.iloc[:,:-1].values 
-y  = dataset.iloc[:,1].values
-from sklearn.model_selection import train_test_split
-x_train,x_test,y_train,y_test = train_test_split(x,y,test_size = 1/3,random_state=0)
-regressor = LinearRegression()
-regressor.fit(x_train,y_train)
-y_pred=regressor.predict(x_test)
-plt.scatter(x_train,y_train,color = "green")
-plt.plot(x_train,regressor.predict(x_train),color= "purple")
-plt.title("hours Vs scores(train)")
-plt.xlabel("hours")
-plt.ylabel("scores")
-plt.show()
-plt.scatter(x_test,y_test,color = "blue")
-plt.plot(x_test,regressor.predict(x_test),color= "black")
-plt.title("hours Vs scores(train)")
-plt.xlabel("hours")
-plt.ylabel("scores")
-plt.show()
-````
+data=pd.read_csv('/content/student_scores - student_scores.csv')
+data.head()
+data.isnull().sum()
+x=data.Hours
+x.head()
+y=data.Scores
+y.head()
+n=len(x)
+m=0
+c=0
+L=0.01
+loss=[]
+for i in range(10000):
+  ypred=m*x+c
+  MSE=(1/n)*sum((ypred-y)*2)
+  dm=(2/n)*sum(x*(ypred-y))
+  dc=(2/n)*sum(ypred-y)
+  c=c-L*dc
+  m=m-L*dm
+  loss.append(MSE)
+print(m,c)
+y_pred=m*x+c
+plt.scatter(x,y,color='black')
+plt.plot(x,y_pred)
+plt.xlabel('Study Hours')
+plt.ylabel('Scores')
+
+plt.title('Study Hours vs Scores')
+plt.plot(loss)
+plt.xlabel('Iterations')
+plt.ylabel('Loss')
+```
 
 ## Output:
 ![OUTPUT](1.jpg)
-
+![output](2.jpg)
 
 ## Result:
 Thus the program to implement the linear regression using gradient descent is written and verified using python programming.
